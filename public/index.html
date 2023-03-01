@@ -4,9 +4,46 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="icon" href="../src/img/check-mark.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../src/reset.css" />
     <script src="../dist/main.js"></script>
-    <title>easy todo</title>
+    <title>simple todo</title>
   </head>
-  <body></body>
+  <body>
+    <input type="checkbox" class="theme-switch" id="theme-switch"/>
+    <div id="page">
+
+      <header>
+        <div class="site-heading">
+          <img
+          src="../src/img/check-mark.png"
+          alt="checkmark logo"
+          class="site-logo"
+        />
+        <h1>simple todo</h1>
+        </div>
+
+        <label for="theme-switch" class="switch-label"></label>
+      </header>
+      <nav>
+        <h2>Views</h2>
+        <ul>
+          <li><a href="#all"> <img src="../src/img/all-tasks.png" alt="All Tasks Icon"> All Tasks</a></li>
+          <li><a href="#today"><img src="../src/img/today.png" alt="Today Icon">Today</a></li>
+          <li><a href="#tomorrow"><img src="../src/img/tomorrow.png" alt="Tomorrow Icon">Tomorrow</a></li>
+          <li><a href="#week"><img src="../src/img/week.png" alt="Next 7 Days Icon">Next 7 Days</a></li>
+        </ul>
+        <h2>Projects</h2>
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#personal">Personal</a></li>
+          <li><a href="#school">School</a></li>
+      </nav>
+      <main id="content"></main>
+      <footer>
+        <a href="https://github.com/DustinYochim">Created by Dustin Yochim </a>
+      </footer>
+    </div>
+    
+  </body>
 </html>
