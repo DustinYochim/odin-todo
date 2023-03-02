@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import { format } from "date-fns";
 import Storage from "./Storage.js";
 import Task from "./Task.js";
@@ -8,6 +9,7 @@ export default class UI {
   static init() {
     // Check local storage
     UI.themeSwitcher();
+    Storage.getLocalStorage();
     // Render all tasks
     UI.renderAllTasks();
     UI.renderAllProjects();
@@ -47,6 +49,7 @@ export default class UI {
       // Task.completeTask(task);
       Task.deleteTask(task);
       li.remove();
+      Storage.updateLocalStorage();
     });
   }
 
@@ -86,7 +89,7 @@ export default class UI {
 
     themeSwitch.addEventListener("change", (e) => {
       if (e.currentTarget.checked === true) {
-        // Add item to localstorage
+        // Add item to local storage
         localStorage.setItem("switchedTheme", "true");
       } else {
         // Remove item if theme is switched back to normal
@@ -337,12 +340,12 @@ export default class UI {
     } else if (document.getElementById("low").checked) {
       priority = "low";
     } else {
-      alert("Something went wrong!");
+      // alert("Something went wrong!");
     }
     const task = new Task(name, priority, notes, false, project, dueDate);
     Project.addTaskToProject(project, task);
     Task.addTask(task);
-
+    Storage.updateLocalStorage();
     UI.renderAllTasks();
     const taskForm = document.querySelector("#addTaskForm");
     taskForm.setAttribute("style", "display: none");
@@ -356,6 +359,7 @@ export default class UI {
     const project = new Project(name);
 
     Project.addProject(project);
+    Storage.updateLocalStorage();
     UI.renderAllProjects();
     const projectForm = document.querySelector("#addProjectForm");
     projectForm.setAttribute("style", "display: none");
@@ -368,14 +372,13 @@ export default class UI {
     // console.log(project);
     const projectName = project.querySelector(".project-name").textContent;
     if (projectName === "Inbox") {
-      alert("You cannot delete the Inbox project");
+      // alert("You cannot delete the Inbox project");
       return;
     }
-    // console.log(projectName);
-    console.log(Project.getAllProjects());
+
     Task.deleteAllTasksInProject(projectName);
     Project.deleteProject(projectName);
-    console.log(Project.getAllProjects());
+    Storage.updateLocalStorage();
     UI.renderAllProjects();
     UI.renderAllTasks();
   }

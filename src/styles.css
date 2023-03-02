@@ -337,28 +337,6 @@ main > h2 {
   box-shadow: 0 0 15px var(--theme-color);
 }
 
-.sort-button {
-  margin-bottom: 1rem;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  display: grid;
-  place-items: center;
-  margin-right: 1rem;
-  align-self: flex-end;
-}
-
-svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  fill: var(--theme-color);
-}
-
-svg:hover {
-  fill: #2abd67;
-}
-
 .add-task-button {
   background-color: var(--theme-color);
   color: var(--text-color);

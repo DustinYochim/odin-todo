@@ -15,6 +15,12 @@ export default class Project {
     projects.push(project);
   }
 
+  static addProjects(projects) {
+    projects.forEach((project) => {
+      if (project.name !== "Inbox") this.addProject(project);
+    });
+  }
+
   static getAllProjects() {
     return projects;
   }

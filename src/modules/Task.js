@@ -1,28 +1,52 @@
 const tasks = [
-  {
-    name: "Task 1",
-    dueDate: "03/01/2023",
-    priority: "high",
-    notes: "This is a note",
-    completed: false,
-    project: "Inbox",
-  },
-  {
-    name: "Task 2",
-    dueDate: "03/03/2023",
-    priority: "medium",
-    notes: "This is a note",
-    completed: false,
-    project: "Inbox",
-  },
-  {
-    name: "Task 3",
-    dueDate: "03/02/2023",
-    priority: "low",
-    notes: "This is a note",
-    completed: false,
-    project: "Inbox",
-  },
+  // {
+  //   name: "Task 1",
+  //   dueDate: "03/01/2023",
+  //   priority: "high",
+  //   notes: "This is a note",
+  //   completed: false,
+  //   project: "Inbox",
+  // },
+  // {
+  //   name: "Task 2",
+  //   dueDate: "03/03/2023",
+  //   priority: "medium",
+  //   notes: "This is a note",
+  //   completed: false,
+  //   project: "Inbox",
+  // },
+  // {
+  //   name: "Task 3",
+  //   dueDate: "03/02/2023",
+  //   priority: "low",
+  //   notes: "This is a note",
+  //   completed: false,
+  //   project: "Inbox",
+  // },
+  // {
+  //   name: "Task 4",
+  //   dueDate: "03/01/2023",
+  //   priority: "high",
+  //   notes: "This is a note",
+  //   completed: false,
+  //   project: "Inbox",
+  // },
+  // {
+  //   name: "Task 5",
+  //   dueDate: "03/03/2023",
+  //   priority: "medium",
+  //   notes: "This is a note",
+  //   completed: false,
+  //   project: "Inbox",
+  // },
+  // {
+  //   name: "Task 6",
+  //   dueDate: "03/02/2023",
+  //   priority: "low",
+  //   notes: "This is a note",
+  //   completed: false,
+  //   project: "Inbox",
+  // },
 ];
 
 export default class Task {
@@ -52,6 +76,15 @@ export default class Task {
 
   static addTask(task) {
     tasks.push(task);
+  }
+
+  static addTasks(tasks) {
+    tasks.forEach((task) => {
+      // check if task already exists
+      if (this.getTask(task.name) === undefined) {
+        this.addTask(task);
+      }
+    });
   }
 
   static sortTasksByDate() {
