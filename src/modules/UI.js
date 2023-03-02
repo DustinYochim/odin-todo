@@ -180,6 +180,9 @@ export default class UI {
   // Render all tasks
   static renderAllTasks() {
     // console.log("Rendering all tasks");
+    const mainHeading = document.querySelector("#mainHeading");
+    mainHeading.textContent = "";
+    mainHeading.textContent = "All Tasks";
     const tasks = Task.getAllTasks();
     tasks.sort((a, b) => {
       const dateA = new Date(a.dueDate);
@@ -208,6 +211,7 @@ export default class UI {
     deleteButton.setAttribute("id", "deleteProjectButton");
     // // Render delete icon
     const deleteIcon = document.createElement("img");
+    deleteIcon.classList.add("delete-project-icon");
     deleteIcon.setAttribute("src", "../src/img/x.svg");
     deleteButton.appendChild(deleteIcon);
     // Append elements to li
@@ -220,8 +224,16 @@ export default class UI {
     deleteButton.addEventListener("click", UI.deleteProject);
 
     // Add event listener to project name
-    name.addEventListener("click", () => {
+    li.addEventListener("click", (e) => {
       // console.log("Project name clicked");
+      console.log(e.target.classList.contains("delete-project-button"));
+      if (
+        e.target.classList.contains("delete-project-button") ||
+        e.target.classList.contains("delete-project-icon")
+      ) {
+        return;
+      }
+      // console.log(e);
       const mainHeading = document.querySelector("#mainHeading");
       mainHeading.textContent = project.name;
       const tasks = Task.getAllTasks();
@@ -240,6 +252,7 @@ export default class UI {
   static renderAllProjects() {
     // console.log("Rendering all projects");
     const projects = Project.getAllProjects();
+    // console.log(projects);
     const projectList = document.querySelector("#projectList");
     projectList.innerHTML = "";
     projects.forEach((project) => {
@@ -330,9 +343,15 @@ export default class UI {
     const project = e.target.parentElement.parentElement;
     // console.log(project);
     const projectName = project.querySelector(".project-name").textContent;
+    if (projectName === "Inbox") {
+      alert("You cannot delete the Inbox project");
+      return;
+    }
     // console.log(projectName);
+    console.log(Project.getAllProjects());
     Task.deleteAllTasksInProject(projectName);
     Project.deleteProject(projectName);
+    console.log(Project.getAllProjects());
     UI.renderAllProjects();
     UI.renderAllTasks();
   }
@@ -376,6 +395,11 @@ export default class UI {
     const mainHeading = document.querySelector("#mainHeading");
     mainHeading.textContent = "Next 7 Days";
     const tasks = Task.getAllTasks();
+    tasks.sort((a, b) => {
+      const dateA = new Date(a.dueDate);
+      const dateB = new Date(b.dueDate);
+      return dateA - dateB;
+    });
     const taskList = document.querySelector("#taskList");
     taskList.innerHTML = "";
     tasks.forEach((task) => {
