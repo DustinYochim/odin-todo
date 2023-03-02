@@ -1,27 +1,24 @@
 const tasks = [
   {
     name: "Task 1",
-    // dueDate: new Date(),
-    dueDate: "2023-03-01",
-    priority: "High",
+    dueDate: "03/01/2023",
+    priority: "high",
     notes: "This is a note",
     completed: false,
     project: "Inbox",
   },
   {
     name: "Task 2",
-    dueDate: "2023-03-02",
-    // dueDate: new Date(),
-    priority: "High",
+    dueDate: "03/03/2023",
+    priority: "medium",
     notes: "This is a note",
     completed: false,
     project: "Inbox",
   },
   {
     name: "Task 3",
-    dueDate: "2023-03-03",
-    // dueDate: new Date(),
-    priority: "High",
+    dueDate: "03/02/2023",
+    priority: "low",
     notes: "This is a note",
     completed: false,
     project: "Inbox",
@@ -61,10 +58,20 @@ export default class Task {
     return tasks.sort((a, b) => a.dueDate - b.dueDate);
   }
 
-  static getDateFormatted() {
-    const day = this.dueDate.split("/")[1];
-    const month = this.dueDate.split("/")[1];
-    const year = this.dueDate.split("/")[2];
-    return `${month}/${day}/${year}`;
+  static deleteTask(name) {
+    const task = tasks.find((task) => task.name === name);
+    tasks.splice(tasks.indexOf(task), 1);
+  }
+
+  static deleteAllTasksInProject(projectName) {
+    const project = tasks.filter((task) => task.project === projectName);
+    project.forEach((task) => {
+      tasks.splice(tasks.indexOf(task), 1);
+    });
+  }
+
+  static editTask(name, property, value) {
+    const task = tasks.find((task) => task.name === name);
+    task[property] = value;
   }
 }

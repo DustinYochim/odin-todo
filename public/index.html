@@ -34,18 +34,18 @@
         <h2>Views</h2>
         <ul>
           <li>
-            <a href="#all">
+            <a id="allTasksLink" href="#all">
               <img src="../src/img/all-tasks.png" alt="All Tasks Icon" /> All
               Tasks</a
             >
           </li>
           <li>
-            <a href="#today"
+            <a id="todayLink" href="#today"
               ><img src="../src/img/today.png" alt="Today Icon" />Today</a
             >
           </li>
           <li>
-            <a href="#tomorrow"
+            <a id="tomorrowLink" href="#tomorrow"
               ><img
                 src="../src/img/tomorrow.png"
                 alt="Tomorrow Icon"
@@ -53,7 +53,7 @@
             >
           </li>
           <li>
-            <a href="#week"
+            <a id="weekLink" href="#week"
               ><img src="../src/img/week.png" alt="Next 7 Days Icon" />Next 7
               Days</a
             >
@@ -73,14 +73,17 @@
             id="addProjectInput"
             required
           />
-          <button type="submit" id="addProjectButton">Add</button>
+          <div class="form-buttons">
+            <button type="submit" id="addProjectButton">Add</button>
+            <button type="reset" id="cancelProjectButton">Cancel</button>
+          </div>
         </form>
       </nav>
       <!-- NAV ENDS-->
 
       <!-- MAIN BEGINS-->
       <main id="content">
-        <h2 class="main-heading">All Tasks</h2>
+        <h2 class="main-heading" id="mainHeading">All Tasks</h2>
         <button class="button sort-button" id="sortButton">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -96,6 +99,7 @@
 
         <ul id="taskList"></ul>
 
+        <!-- ADD TASK FORM BEGINS-->
         <form id="addTaskForm" class="add-task-form">
           <div class="form-row">
             <label for="taskName" aria-required="true">Task</label>
@@ -132,7 +136,7 @@
           </div>
           <div class="form-row buttons">
             <button type="submit">Add</button>
-            <button type="reset">Cancel</button>
+            <button type="reset" id="cancelButton">Cancel</button>
           </div>
         </form>
 

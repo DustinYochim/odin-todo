@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import Task from "./Task.js";
 import Project from "./Project.js";
 
@@ -13,7 +13,7 @@ export default class UI {
     // Add event listeners
     UI.addEventListeners();
 
-    console.log("UI module initialized");
+    // console.log("UI module initialized");
   }
 
   // This code is only used to remember theme selection
@@ -46,6 +46,14 @@ export default class UI {
     // Render complete button
     const markCompleteButton = document.createElement("button");
     markCompleteButton.classList.add("mark-complete-button");
+    // Add style based on priority
+    if (task.priority === "high") {
+      markCompleteButton.classList.add("high-priority");
+    } else if (task.priority === "medium") {
+      markCompleteButton.classList.add("medium-priority");
+    } else if (task.priority === "low") {
+      markCompleteButton.classList.add("low-priority");
+    }
     // Render Title
     const name = document.createElement("span");
     name.classList.add("task-name");
@@ -54,13 +62,11 @@ export default class UI {
     const dueDate = document.createElement("span");
     dueDate.classList.add("due-date");
     dueDate.textContent = task.dueDate;
-    // dueDate.textContent = format(parseISO(task.dueDate), "MM/dd/yyyy");
-    // console.log(parseISO(task.dueDate));
-    // Render details button
+    // Render expand button
     const expandButton = document.createElement("button");
     expandButton.setAttribute("id", "expandButton");
     expandButton.classList.add("expand-button");
-    // Render details icon
+    // Render expand icon
     const expandIcon = document.createElement("img");
     expandIcon.setAttribute("src", "../src/img/expand.svg");
     expandButton.appendChild(expandIcon);
@@ -95,7 +101,7 @@ export default class UI {
     taskList.appendChild(li);
     // Add event listener to expand button
     expandButton.addEventListener("click", () => {
-      console.log("Expand button clicked");
+      // console.log("Expand button clicked");
       taskDetails.setAttribute("style", "display: block");
       expandButton.setAttribute("style", "display: none");
       const collapseButton = document.createElement("button");
@@ -109,6 +115,15 @@ export default class UI {
         expandButton.setAttribute("style", "display: block");
         collapseButton.remove();
       });
+    });
+
+    // Add event listener to complete button
+    markCompleteButton.addEventListener("click", () => {
+      // console.log("Complete button clicked");
+      // Task.completeTask(task);
+      Task.deleteTask(task);
+      li.remove();
+      // console.log(Task.getAllTasks());
     });
   }
 
@@ -164,8 +179,13 @@ export default class UI {
 
   // Render all tasks
   static renderAllTasks() {
-    console.log("Rendering all tasks");
+    // console.log("Rendering all tasks");
     const tasks = Task.getAllTasks();
+    tasks.sort((a, b) => {
+      const dateA = new Date(a.dueDate);
+      const dateB = new Date(b.dueDate);
+      return dateA - dateB;
+    });
     const taskList = document.querySelector("#taskList");
     taskList.innerHTML = "";
     tasks.forEach((task) => {
@@ -182,23 +202,43 @@ export default class UI {
     const name = document.createElement("span");
     name.classList.add("project-name");
     name.textContent = project.name;
-    // // Render project delete button
-    // const deleteButton = document.createElement("button");
-    // deleteButton.classList.add("delete-button");
+    // Render project delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("delete-project-button");
+    deleteButton.setAttribute("id", "deleteProjectButton");
     // // Render delete icon
-    // const deleteIcon = document.createElement("img");
-    // deleteIcon.setAttribute("src", "../src/img/delete.svg");
-    // deleteButton.appendChild(deleteIcon);
+    const deleteIcon = document.createElement("img");
+    deleteIcon.setAttribute("src", "../src/img/x.svg");
+    deleteButton.appendChild(deleteIcon);
     // Append elements to li
     li.appendChild(name);
-    // li.appendChild(deleteButton);
+    li.appendChild(deleteButton);
     // Append li to projectList
     projectList.appendChild(li);
+
+    // Add event listener to delete button
+    deleteButton.addEventListener("click", UI.deleteProject);
+
+    // Add event listener to project name
+    name.addEventListener("click", () => {
+      // console.log("Project name clicked");
+      const mainHeading = document.querySelector("#mainHeading");
+      mainHeading.textContent = project.name;
+      const tasks = Task.getAllTasks();
+      const filteredTasks = tasks.filter(
+        (task) => task.project === project.name
+      );
+      const taskList = document.querySelector("#taskList");
+      taskList.innerHTML = "";
+      filteredTasks.forEach((task) => {
+        UI.renderTask(task);
+      });
+    });
   }
 
   // Render all projects
   static renderAllProjects() {
-    console.log("Rendering all projects");
+    // console.log("Rendering all projects");
     const projects = Project.getAllProjects();
     const projectList = document.querySelector("#projectList");
     projectList.innerHTML = "";
@@ -216,7 +256,10 @@ export default class UI {
 
   // Hide project form
   static hideProjectForm() {
-    console.log("Hiding project form");
+    // console.log("Hiding project form");
+    const projectForm = document.querySelector("#addProjectForm");
+    projectForm.setAttribute("style", "display: none");
+    projectForm.reset();
   }
 
   // Show task form
@@ -226,11 +269,28 @@ export default class UI {
     taskForm.setAttribute("style", "display: block");
   }
 
+  // Hide task form
+  static hideTaskForm() {
+    const taskForm = document.querySelector("#addTaskForm");
+    taskForm.setAttribute("style", "display: none");
+    taskForm.reset();
+  }
+
+  // Format date
+  static formatDate(date) {
+    const year = date.slice(0, 4);
+    const month = date.slice(5, 7);
+    const day = date.slice(8, 10);
+    const formattedDate = format(new Date(year, month - 1, day), "MM/dd/yyyy");
+    return formattedDate;
+  }
+
   // Add task form submit
   static addTaskFormSubmit(e) {
     e.preventDefault();
     const name = document.querySelector("#taskName").value;
-    const dueDate = document.querySelector("#dueDate").value;
+    const date = document.querySelector("#dueDate").value;
+    const dueDate = UI.formatDate(date);
     const project = document.querySelector("#project").value;
     const notes = document.querySelector("#notes").value;
     let priority = null;
@@ -243,11 +303,11 @@ export default class UI {
     } else {
       alert("Something went wrong!");
     }
-    console.log(project);
+    // console.log(project);
     const task = new Task(name, priority, notes, false, project, dueDate);
     Project.addTaskToProject(project, task);
     Task.addTask(task);
-    UI.renderTask(task);
+    UI.renderAllTasks();
     const taskForm = document.querySelector("#addTaskForm");
     taskForm.setAttribute("style", "display: none");
     taskForm.reset();
@@ -265,6 +325,70 @@ export default class UI {
     projectForm.reset();
   }
 
+  // Delete project
+  static deleteProject(e) {
+    const project = e.target.parentElement.parentElement;
+    // console.log(project);
+    const projectName = project.querySelector(".project-name").textContent;
+    // console.log(projectName);
+    Task.deleteAllTasksInProject(projectName);
+    Project.deleteProject(projectName);
+    UI.renderAllProjects();
+    UI.renderAllTasks();
+  }
+
+  // Render Tasks due today
+  static renderTodayTasks() {
+    // console.log("Rendering tasks due today");
+    const mainHeading = document.querySelector("#mainHeading");
+    mainHeading.textContent = "Today";
+    const tasks = Task.getAllTasks();
+    const taskList = document.querySelector("#taskList");
+    taskList.innerHTML = "";
+    tasks.forEach((task) => {
+      if (task.dueDate === UI.formatDate(new Date().toISOString())) {
+        UI.renderTask(task);
+      }
+    });
+  }
+
+  // Render Tomorrows Tasks
+  static renderTomorrowTasks() {
+    // console.log("Rendering tasks due tomorrow");
+    const mainHeading = document.querySelector("#mainHeading");
+    mainHeading.textContent = "Tomorrow";
+    const tasks = Task.getAllTasks();
+    const taskList = document.querySelector("#taskList");
+    taskList.innerHTML = "";
+    tasks.forEach((task) => {
+      const taskDate = new Date(task.dueDate);
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      if (taskDate.toDateString() === tomorrow.toDateString()) {
+        UI.renderTask(task);
+      }
+    });
+  }
+
+  // Render Tasks due this week
+  static renderWeekTasks() {
+    // console.log("Rendering tasks due this week");
+    const mainHeading = document.querySelector("#mainHeading");
+    mainHeading.textContent = "Next 7 Days";
+    const tasks = Task.getAllTasks();
+    const taskList = document.querySelector("#taskList");
+    taskList.innerHTML = "";
+    tasks.forEach((task) => {
+      const taskDate = new Date(task.dueDate);
+      const today = new Date();
+      const week = new Date();
+      week.setDate(today.getDate() + 7);
+      if (taskDate >= today && taskDate <= week) {
+        UI.renderTask(task);
+      }
+    });
+  }
+
   // Add Event Listeners
   static addEventListeners() {
     const addProjectButton = document.querySelector("#addProjectButton");
@@ -280,14 +404,37 @@ export default class UI {
     addTaskForm.addEventListener("submit", UI.addTaskFormSubmit);
     addTaskForm.reset();
 
-    const sortButton = document.querySelector("#sortButton");
-    sortButton.addEventListener("click", UI.sortTaskAscending);
+    const cancelButton = document.querySelector("#cancelButton");
+    cancelButton.addEventListener("click", UI.hideTaskForm);
+
+    const cancelProjectButton = document.querySelector("#cancelProjectButton");
+    cancelProjectButton.addEventListener("click", UI.hideProjectForm);
+
+    const allTasksLink = document.querySelector("#allTasksLink");
+    allTasksLink.addEventListener("click", UI.renderAllTasks);
+
+    const todayLink = document.querySelector("#todayLink");
+    todayLink.addEventListener("click", UI.renderTodayTasks);
+
+    const tomorrowLink = document.querySelector("#tomorrowLink");
+    tomorrowLink.addEventListener("click", UI.renderTomorrowTasks);
+
+    const weekLink = document.querySelector("#weekLink");
+    weekLink.addEventListener("click", UI.renderWeekTasks);
+  }
+
+  // Sort tasks ascending
+  static sortTaskAscending() {
+    const tasks = Task.getAllTasks();
+    tasks.sort((a, b) => a.dueDate - b.dueDate);
+    UI.renderAllTasks();
   }
 
   // Add Form Select Options
   static addFormSelectOptions() {
     const projects = Project.getAllProjects();
     const projectSelect = document.querySelector("#project");
+    projectSelect.innerHTML = "";
     projects.forEach((project) => {
       const option = document.createElement("option");
       option.setAttribute("value", project.name);

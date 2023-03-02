@@ -163,7 +163,7 @@ a > img {
   height: 1.5rem;
   margin-right: 0.5rem;
 }
-
+/* Add project button */
 .add-project-button {
   cursor: pointer;
   background-color: transparent;
@@ -184,7 +184,8 @@ a > img {
   margin-bottom: 0.5rem;
 }
 
-.add-project-form button[type="submit"] {
+.add-project-form button[type="submit"],
+.add-project-form button[type="reset"] {
   border: none;
   border-radius: 3px;
   background-color: var(--theme-color);
@@ -192,6 +193,39 @@ a > img {
   cursor: pointer;
 }
 
+.delete-project-button {
+  display: none;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  place-items: center;
+}
+
+.project:hover .delete-project-button {
+  display: grid;
+  place-items: center;
+}
+
+.delete-project-button > img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.project {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.project-name {
+  cursor: pointer;
+}
+
+/* MAIN */
+
+/* ADD TASK FORM */
 .add-task-form {
   display: none;
   flex-direction: column;
@@ -225,7 +259,7 @@ a > img {
   background-color: #ffffff;
   border: 1px solid #d6d9dc;
   border-radius: 3px;
-  width: 25%;
+  width: 135px;
   padding: 5px;
   font-size: 1rem;
 }
@@ -249,6 +283,8 @@ a > img {
 
   min-height: 50px;
   resize: none;
+
+  font-family: "Atlata", sans-serif;
 }
 
 .form-row.buttons {
@@ -285,7 +321,7 @@ a > img {
 input[type="text"] {
   font-family: "Atlata", sans-serif;
 }
-/* MAIN */
+
 main {
   grid-area: main;
   padding: 5rem;
@@ -398,6 +434,21 @@ main > ul > li {
   border-radius: 50%;
   padding: 0.5rem;
   cursor: pointer;
+}
+
+.mark-complete-button.high-priority {
+  border: 1px solid red;
+  background: rgba(255, 0, 0, 0.25);
+}
+
+.mark-complete-button.medium-priority {
+  border: 1px solid orange;
+  background: rgba(255, 165, 0, 0.25);
+}
+
+.mark-complete-button.low-priority {
+  border: 1px solid green;
+  background: rgba(0, 128, 0, 0.25);
 }
 
 .mark-complete-button:hover {
