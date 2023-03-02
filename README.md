@@ -14,22 +14,22 @@ Application data is persisted using the Web Storage API (localStorage)
 ## How to Use
 
 To use the application, follow these steps:
-
-Clone the repository
-Run npm install to install the required packages
-Run npm start to start the application
-Open index.html in your browser
+* Clone the repository
+* Run npm install to install the required packages
+* Run npm start to start the application
+* Open index.html in your browser
 
 ## Application Structure
 
 The application is structured as follows:
 
-index.html: The main HTML file that displays the UI and imports the required JavaScript and CSS files
-style.css: The CSS file that styles the UI
-app.js: The main JavaScript file that initializes the application and handles user interactions
-project.js: The module that defines the Project class
-task.js: The module that defines the Task class
-storage.js: The module that handles data persistence using localStorage
+* index.html: The main HTML file that displays the UI and imports the required JavaScript and CSS files
+* style.css: The CSS file that styles the UI
+* index.js: The main JavaScript file that initializes the application and handles user interactions
+* Project.js: The module that defines the Project class
+* Task.js: The module that defines the Task class
+* UI.js: The module that defines the UI class
+* storage.js: The module that handles data persistence using localStorage
 
 ## Dependencies
 
