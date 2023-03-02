@@ -258,7 +258,7 @@ a > img {
   border-radius: 3px;
   width: 135px;
   padding: 5px;
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 
 .form-row select {

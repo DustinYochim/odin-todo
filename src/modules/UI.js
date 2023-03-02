@@ -1,19 +1,82 @@
 import { format } from "date-fns";
+import Storage from "./Storage.js";
 import Task from "./Task.js";
 import Project from "./Project.js";
 
 export default class UI {
   // Initialize the UI module
   static init() {
+    // Check local storage
+    UI.themeSwitcher();
     // Render all tasks
     UI.renderAllTasks();
     UI.renderAllProjects();
-    UI.themeSwitcher();
-
     // Add event listeners
     UI.addEventListeners();
+  }
 
-    // console.log("UI module initialized");
+  // Initialize task buttons
+  static initTaskButtons(
+    expandButton,
+    taskDetails,
+    taskSummary,
+    markCompleteButton,
+    task,
+    li
+  ) {
+    // Add event listener to expand button
+    expandButton.addEventListener("click", () => {
+      // console.log("Expand button clicked");
+      taskDetails.setAttribute("style", "display: block");
+      expandButton.setAttribute("style", "display: none");
+      const collapseButton = document.createElement("button");
+      collapseButton.classList.add("collapse-button");
+      const collapseIcon = document.createElement("img");
+      collapseIcon.setAttribute("src", "../src/img/expand-less.svg");
+      collapseButton.appendChild(collapseIcon);
+      taskSummary.appendChild(collapseButton);
+      collapseButton.addEventListener("click", () => {
+        taskDetails.setAttribute("style", "display: none");
+        expandButton.setAttribute("style", "display: block");
+        collapseButton.remove();
+      });
+    });
+
+    // // Add event listener to complete button
+    markCompleteButton.addEventListener("click", () => {
+      // Task.completeTask(task);
+      Task.deleteTask(task);
+      li.remove();
+    });
+  }
+
+  // Initialize project buttons
+  static initProjectButtons(deleteButton, li, project) {
+    deleteButton.addEventListener("click", UI.deleteProject);
+
+    // Add event listener to project name
+    li.addEventListener("click", (e) => {
+      // console.log("Project name clicked");
+      console.log(e.target.classList.contains("delete-project-button"));
+      if (
+        e.target.classList.contains("delete-project-button") ||
+        e.target.classList.contains("delete-project-icon")
+      ) {
+        return;
+      }
+      // console.log(e);
+      const mainHeading = document.querySelector("#mainHeading");
+      mainHeading.textContent = project.name;
+      const tasks = Task.getAllTasks();
+      const filteredTasks = tasks.filter(
+        (task) => task.project === project.name
+      );
+      const taskList = document.querySelector("#taskList");
+      taskList.innerHTML = "";
+      filteredTasks.forEach((task) => {
+        UI.renderTask(task);
+      });
+    });
   }
 
   // This code is only used to remember theme selection
@@ -78,6 +141,7 @@ export default class UI {
     taskSummary.appendChild(expandButton);
     // Append Summary to li
     li.appendChild(taskSummary);
+
     // Render task details
     const taskDetails = document.createElement("div");
     taskDetails.classList.add("task-details");
@@ -93,38 +157,23 @@ export default class UI {
     const priority = document.createElement("p");
     priority.classList.add("task-priority");
     priority.textContent = `Priority: ${task.priority}`;
+    // Append elements to taskDetails
     taskDetails.appendChild(priority);
     taskDetails.appendChild(project);
     taskDetails.appendChild(notes);
+    // Append taskDetails to li
     li.appendChild(taskDetails);
     // Append li to taskList
     taskList.appendChild(li);
-    // Add event listener to expand button
-    expandButton.addEventListener("click", () => {
-      // console.log("Expand button clicked");
-      taskDetails.setAttribute("style", "display: block");
-      expandButton.setAttribute("style", "display: none");
-      const collapseButton = document.createElement("button");
-      collapseButton.classList.add("collapse-button");
-      const collapseIcon = document.createElement("img");
-      collapseIcon.setAttribute("src", "../src/img/expand-less.svg");
-      collapseButton.appendChild(collapseIcon);
-      taskSummary.appendChild(collapseButton);
-      collapseButton.addEventListener("click", () => {
-        taskDetails.setAttribute("style", "display: none");
-        expandButton.setAttribute("style", "display: block");
-        collapseButton.remove();
-      });
-    });
 
-    // Add event listener to complete button
-    markCompleteButton.addEventListener("click", () => {
-      // console.log("Complete button clicked");
-      // Task.completeTask(task);
-      Task.deleteTask(task);
-      li.remove();
-      // console.log(Task.getAllTasks());
-    });
+    UI.initTaskButtons(
+      expandButton,
+      taskDetails,
+      taskSummary,
+      markCompleteButton,
+      task,
+      li
+    );
   }
 
   // Expand task details
@@ -220,32 +269,7 @@ export default class UI {
     // Append li to projectList
     projectList.appendChild(li);
 
-    // Add event listener to delete button
-    deleteButton.addEventListener("click", UI.deleteProject);
-
-    // Add event listener to project name
-    li.addEventListener("click", (e) => {
-      // console.log("Project name clicked");
-      console.log(e.target.classList.contains("delete-project-button"));
-      if (
-        e.target.classList.contains("delete-project-button") ||
-        e.target.classList.contains("delete-project-icon")
-      ) {
-        return;
-      }
-      // console.log(e);
-      const mainHeading = document.querySelector("#mainHeading");
-      mainHeading.textContent = project.name;
-      const tasks = Task.getAllTasks();
-      const filteredTasks = tasks.filter(
-        (task) => task.project === project.name
-      );
-      const taskList = document.querySelector("#taskList");
-      taskList.innerHTML = "";
-      filteredTasks.forEach((task) => {
-        UI.renderTask(task);
-      });
-    });
+    UI.initProjectButtons(deleteButton, li, project);
   }
 
   // Render all projects
@@ -315,10 +339,10 @@ export default class UI {
     } else {
       alert("Something went wrong!");
     }
-    // console.log(project);
     const task = new Task(name, priority, notes, false, project, dueDate);
     Project.addTaskToProject(project, task);
     Task.addTask(task);
+
     UI.renderAllTasks();
     const taskForm = document.querySelector("#addTaskForm");
     taskForm.setAttribute("style", "display: none");
@@ -330,6 +354,7 @@ export default class UI {
     e.preventDefault();
     const name = document.querySelector("#addProjectInput").value;
     const project = new Project(name);
+
     Project.addProject(project);
     UI.renderAllProjects();
     const projectForm = document.querySelector("#addProjectForm");
@@ -444,13 +469,6 @@ export default class UI {
 
     const weekLink = document.querySelector("#weekLink");
     weekLink.addEventListener("click", UI.renderWeekTasks);
-  }
-
-  // Sort tasks ascending
-  static sortTaskAscending() {
-    const tasks = Task.getAllTasks();
-    tasks.sort((a, b) => a.dueDate - b.dueDate);
-    UI.renderAllTasks();
   }
 
   // Add Form Select Options
