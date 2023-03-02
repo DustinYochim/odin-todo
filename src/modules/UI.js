@@ -252,7 +252,6 @@ export default class UI {
   static renderAllProjects() {
     // console.log("Rendering all projects");
     const projects = Project.getAllProjects();
-    // console.log(projects);
     const projectList = document.querySelector("#projectList");
     projectList.innerHTML = "";
     projects.forEach((project) => {
