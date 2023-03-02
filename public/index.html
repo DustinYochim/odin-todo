@@ -127,6 +127,49 @@
           </div>
         </form>
 
+        <!-- ADD TASK FORM ENDS-->
+
+        <!-- EDIT TASK FORM BEGINS-->
+        <form id="editTaskForm" class="edit-task-form">
+          <div class="form-row">
+            <label for="editTaskName" aria-required="true">Task</label>
+            <input type="text" id="editTaskName" required />
+          </div>
+
+          <div class="form-row">
+            <label for="editDueDate" aria-required="true">Due Date</label>
+            <input type="date" id="editDueDate" />
+          </div>
+
+          <div class="form-row">
+            <label for="editProject">Project</label>
+            <select name="project" id="editProject"></select>
+          </div>
+          <fieldset class="legacy-form-row">
+            <legend>Priority</legend>
+            <input id="editLow" name="priority" type="radio" value="low" />
+            <label for="editLow" class="radio-label">Low</label>
+            <input
+              id="editMedium"
+              name="priority"
+              type="radio"
+              value="medium"
+              checked
+            />
+            <label for="editMedium" class="radio-label">Medium</label>
+            <input id="editHigh" name="priority" type="radio" value="high" />
+            <label for="editHigh" class="radio-label">High</label>
+          </fieldset>
+          <div class="form-row">
+            <label for="editNotes">Notes</label>
+            <textarea name="notes" id="editNotes"></textarea>
+          </div>
+          <div class="form-row buttons">
+            <button type="submit">Save</button>
+            <button type="reset" id="cancelEditButton">Cancel</button>
+          </div>
+        </form>
+
         <button id="addTaskButton" class="add-task-button">Add Task</button>
       </main>
       <!-- MAIN ENDS-->

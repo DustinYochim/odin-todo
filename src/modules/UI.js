@@ -128,6 +128,7 @@ export default class UI {
     const dueDate = document.createElement("span");
     dueDate.classList.add("due-date");
     dueDate.textContent = task.dueDate;
+
     // Render expand button
     const expandButton = document.createElement("button");
     expandButton.setAttribute("id", "expandButton");
@@ -136,7 +137,6 @@ export default class UI {
     const expandIcon = document.createElement("img");
     expandIcon.setAttribute("src", "../src/img/expand.svg");
     expandButton.appendChild(expandIcon);
-
     // Append elements to Summary
     taskSummary.appendChild(markCompleteButton);
     taskSummary.appendChild(name);
@@ -152,14 +152,17 @@ export default class UI {
     const project = document.createElement("p");
     project.classList.add("task-project");
     project.textContent = `Project: ${task.project}`;
+
     // Render Task Notes
     const notes = document.createElement("p");
     notes.classList.add("task-notes");
     notes.textContent = `Notes: ${task.notes}`;
+
     // Render Task Priority
     const priority = document.createElement("p");
     priority.classList.add("task-priority");
     priority.textContent = `Priority: ${task.priority}`;
+
     // Append elements to taskDetails
     taskDetails.appendChild(priority);
     taskDetails.appendChild(project);
@@ -175,7 +178,8 @@ export default class UI {
       taskSummary,
       markCompleteButton,
       task,
-      li
+      li,
+      name
     );
   }
 
@@ -222,8 +226,6 @@ export default class UI {
     taskDetails.appendChild(notes);
     taskDetails.appendChild(priority);
     taskDetails.appendChild(collapseButton);
-    // taskDetails.appendChild(editButton);
-    // taskDetails.appendChild(deleteButton);
     // Append taskDetails to li
     li.appendChild(taskDetails);
     expandButton.setAttribute("style", "display: none;");

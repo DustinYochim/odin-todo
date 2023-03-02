@@ -386,7 +386,8 @@ main > ul > li {
 }
 
 .expand-button,
-.collapse-button {
+.collapse-button,
+.edit-button {
   background-color: transparent;
   border: none;
   padding: 0.5rem;
@@ -394,13 +395,23 @@ main > ul > li {
 }
 
 .expand-button > img,
-.collapse-button > img {
+.collapse-button > img,
+.edit-button > img {
   width: 1.5rem;
   height: 1.5rem;
   display: grid;
   place-items: center;
 }
 
+.edit-button {
+  float: right;
+  display: grid;
+  place-items: center;
+}
+
+.edit-task-form {
+  display: none;
+}
 .mark-complete-button {
   background-color: #ffffff;
   height: 1.5rem;
