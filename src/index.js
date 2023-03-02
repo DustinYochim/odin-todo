@@ -1,4 +1,5 @@
 import "./styles.css";
 import { compareAsc, format } from "date-fns";
+import UI from "./modules/UI";
 
-console.log(format(new Date(2014, 1, 11), "yyyy-MM-dd"));
+document.addEventListener("DOMContentLoaded", UI.init);
