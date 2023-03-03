@@ -50,6 +50,7 @@ export default class UI {
       Task.deleteTask(task);
       li.remove();
       Storage.updateLocalStorage();
+      this.renderAllTasks();
     });
   }
 
