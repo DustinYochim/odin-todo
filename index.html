@@ -104,12 +104,18 @@
         <form id="addTaskForm" class="add-task-form">
           <div class="form-row">
             <label for="taskName" aria-required="true">Task</label>
-            <input type="text" id="taskName" required />
+            <input type="text" id="taskName" required spellcheck="true" />
           </div>
 
           <div class="form-row">
             <label for="dueDate" aria-required="true">Due Date</label>
-            <input type="date" id="dueDate" />
+            <input
+              type="date"
+              id="dueDate"
+              value="2023-03-02"
+              min="2021-01-01"
+              max="2030-12-20"
+            />
           </div>
 
           <div class="form-row">
@@ -133,7 +139,7 @@
           </fieldset>
           <div class="form-row">
             <label for="notes">Notes</label>
-            <textarea name="notes" id="notes"></textarea>
+            <textarea name="notes" id="notes" spellcheck="true"></textarea>
           </div>
           <div class="form-row buttons">
             <button type="submit">Add</button>
