@@ -103,8 +103,9 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem;
   border-bottom: 1.5px solid var(--sidebar-color);
+  /* border-bottom: 1px solid var(--theme-color); */
 }
 
 .site-heading {
@@ -119,22 +120,42 @@ header .site-logo {
   height: 2rem;
 }
 
+.hamburger-menu {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger-menu > svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: var(--theme-color);
+}
+
 /* SIDEBAR */
-nav {
+aside {
   grid-area: sidebar;
   background-color: var(--sidebar-color);
+
+  transition: translate var(--animation-timing);
+  translate: 0;
+}
+
+nav {
   padding: 2rem;
   display: flex;
   flex-direction: column;
 }
 
 nav > h2 {
-  font-size: 1.5rem;
+  padding: 0.5rem;
+  font-size: 1.75rem;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 2px solid var(--theme-color);
 }
 
 nav > h2 > button > img {
@@ -325,6 +346,7 @@ main {
 
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 main > h2 {
@@ -462,6 +484,8 @@ footer {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+
+  margin-top: auto;
 }
 
 footer > a {

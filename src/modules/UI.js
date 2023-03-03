@@ -443,6 +443,18 @@ export default class UI {
     });
   }
 
+  static toggleSidebar() {
+    if (document.querySelector("#sidebar").style.display === "none") {
+      document.querySelector("#sidebar").style.display = "block";
+      const page = document.querySelector("#page");
+      page.setAttribute("style", "display: grid; flex-direction: column;");
+    } else {
+      document.querySelector("#sidebar").style.display = "none";
+      const page = document.querySelector("#page");
+      page.setAttribute("style", "display: flex; flex-direction: column;");
+    }
+  }
+
   // Add Event Listeners
   static addEventListeners() {
     const addProjectButton = document.querySelector("#addProjectButton");
@@ -475,6 +487,9 @@ export default class UI {
 
     const weekLink = document.querySelector("#weekLink");
     weekLink.addEventListener("click", UI.renderWeekTasks);
+
+    const hamburgerButton = document.querySelector("#hamburgerButton");
+    hamburgerButton.addEventListener("click", UI.toggleSidebar);
   }
 
   // Add Form Select Options
