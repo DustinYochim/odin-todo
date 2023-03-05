@@ -34,7 +34,7 @@ export default class UI {
       const collapseButton = document.createElement("button");
       collapseButton.classList.add("collapse-button");
       const collapseIcon = document.createElement("img");
-      collapseIcon.setAttribute("src", "../src/img/expand-less.svg");
+      collapseIcon.setAttribute("src", "../../dist/img/expand-less.svg");
       collapseButton.appendChild(collapseIcon);
       taskSummary.appendChild(collapseButton);
       collapseButton.addEventListener("click", () => {
@@ -136,7 +136,7 @@ export default class UI {
     expandButton.classList.add("expand-button");
     // Render expand icon
     const expandIcon = document.createElement("img");
-    expandIcon.setAttribute("src", "../src/img/expand.svg");
+    expandIcon.setAttribute("src", "../../dist/img/expand.svg");
     expandButton.appendChild(expandIcon);
     // Append elements to Summary
     taskSummary.appendChild(markCompleteButton);
@@ -218,9 +218,9 @@ export default class UI {
     const collapseButton = document.createElement("button");
     collapseButton.classList.add("collapse-button");
     // Render Collapse Icon
-    // const collapseIcon = document.createElement("img");
-    // collapseIcon.setAttribute("src", "../src/img/collapse.svg");
-    // collapseButton.appendChild(collapseIcon);
+    const collapseIcon = document.createElement("img");
+    collapseIcon.setAttribute("src", "../../dist/img/expand-less.svg");
+    collapseButton.appendChild(collapseIcon);
 
     // Append elements to taskDetails
     taskDetails.appendChild(project);
@@ -267,7 +267,7 @@ export default class UI {
     // // Render delete icon
     const deleteIcon = document.createElement("img");
     deleteIcon.classList.add("delete-project-icon");
-    deleteIcon.setAttribute("src", "../src/img/x.svg");
+    deleteIcon.setAttribute("src", "../../dist/img/x.svg");
     deleteButton.appendChild(deleteIcon);
     // Append elements to li
     li.appendChild(name);
