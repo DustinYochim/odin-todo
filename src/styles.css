@@ -132,6 +132,10 @@ header .site-logo {
   fill: var(--theme-color);
 }
 
+.hamburger-icon:hover {
+  fill: #da4567;
+}
+
 /* SIDEBAR */
 aside {
   grid-area: sidebar;
