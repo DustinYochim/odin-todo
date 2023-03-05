@@ -136,7 +136,7 @@ export default class UI {
     expandButton.classList.add("expand-button");
     // Render expand icon
     const expandIcon = document.createElement("img");
-    expandIcon.setAttribute("src", "../../dist/img/expand.svg");
+    expandIcon.setAttribute("src", "img/expand.svg");
     expandButton.appendChild(expandIcon);
     // Append elements to Summary
     taskSummary.appendChild(markCompleteButton);
@@ -219,7 +219,7 @@ export default class UI {
     collapseButton.classList.add("collapse-button");
     // Render Collapse Icon
     const collapseIcon = document.createElement("img");
-    collapseIcon.setAttribute("src", "../../dist/img/expand-less.svg");
+    collapseIcon.setAttribute("src", "img/expand-less.svg");
     collapseButton.appendChild(collapseIcon);
 
     // Append elements to taskDetails
