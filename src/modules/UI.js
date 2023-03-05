@@ -384,6 +384,8 @@ export default class UI {
     Storage.updateLocalStorage();
     UI.renderAllProjects();
     UI.renderAllTasks();
+    UI.hideProjectForm();
+    UI.hideTaskForm();
   }
 
   // Render Tasks due today
