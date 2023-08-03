@@ -13,11 +13,7 @@ Application data is persisted using the Web Storage API (localStorage)
 
 ## How to Use
 
-To use the application, follow these steps:
-* Clone the repository
-* Run npm install to install the required packages
-* Run npm start to start the application
-* Open index.html in your browser
+To use the application, open the site in your browser by clicking [here](https://dustinyochim.github.io/odin-todo/).
 
 ## Application Structure
 
@@ -31,20 +27,4 @@ The application is structured as follows:
 * UI.js: The module that defines the UI class
 * storage.js: The module that handles data persistence using localStorage
 
-## Dependencies
 
-The following external libraries were used in the project:
-
-date-fns: A library that provides handy functions for formatting and manipulating dates and times.
-Screenshots
-
-Screenshot 1
-Screenshot 2
-
-## Acknowledgments
-
-This project was inspired by the following great to-do apps:
-
-Todoist
-Things
-any.do
